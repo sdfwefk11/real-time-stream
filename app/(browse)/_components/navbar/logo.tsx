@@ -1,0 +1,25 @@
+import Link from "next/link";
+import Image from "next/image";
+import { Poppins } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const font = Poppins({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+});
+
+export function Logo() {
+  return (
+    <Link href="/">
+      <div className="flex items-center gap-x-4 hover:opacity-75 transition">
+        <div className="bg-white rounded-full p-1 mr-12 shrink-0 lg:shrink lg:mr-0">
+          <Image src="/spooky.svg" width="32" height="32" alt="SphinX" />
+        </div>
+        <div className={cn("hidden lg:block", font.className)}>
+          <p className="text-lg font-semibold">SphinX</p>
+          <p className="text-xs text-muted-foreground">Let&apos;s play</p>
+        </div>
+      </div>
+    </Link>
+  );
+}
