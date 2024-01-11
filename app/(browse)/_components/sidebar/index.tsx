@@ -6,7 +6,9 @@ export function Sidebar() {
   return (
     <Wrapper>
       <Toggle />
-      <div className="space-y-4 pt-4 lg:pt-0"></div>
+      <div className="space-y-4 pt-4 lg:pt-0">
+        <Recommended />
+      </div>
     </Wrapper>
   );
 }
