@@ -1,10 +1,10 @@
 "use client";
 import { useSidebar } from "@/store/use-sidebar";
-import { Stream_User } from "prisma/prisma-client";
+import { Stream_user } from "prisma/prisma-client";
 import { UserItem, UserItemSkeleton } from "./user-item";
 
 interface RecommendedProps {
-  data: Stream_User[];
+  data: Stream_user[];
 }
 
 export function Recommended({ data }: RecommendedProps) {

@@ -14,7 +14,7 @@ export async function getRecommended() {
   let users = [];
 
   if (userId) {
-    users = await client.stream_User.findMany({
+    users = await client.stream_user.findMany({
       where: {
         //현재 로그인중인 자기자신을 제외
         NOT: {
@@ -22,13 +22,13 @@ export async function getRecommended() {
         },
       },
       orderBy: {
-        createAt: "desc",
+        createdAt: "desc",
       },
     });
   } else {
-    users = await client.stream_User.findMany({
+    users = await client.stream_user.findMany({
       orderBy: {
-        createAt: "desc",
+        createdAt: "desc",
       },
     });
   }

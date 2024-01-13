@@ -6,7 +6,7 @@ export async function getSelf() {
   if (!self || !self.username) {
     throw new Error("Unauthorized");
   }
-  const user = await client.stream_User.findUnique({
+  const user = await client.stream_user.findUnique({
     where: { externalUserId: self.id },
   });
   if (!user) {
