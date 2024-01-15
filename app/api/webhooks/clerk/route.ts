@@ -53,7 +53,7 @@ export async function POST(req: Request) {
   // const { id } = evt.data;
   const eventType = evt.type;
   if (eventType === "user.created") {
-    await client.stream_User.create({
+    await client.stream_user.create({
       data: {
         externalUserId: payload.data.id,
         username: payload.data.username,
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     });
   }
   if (eventType === "user.updated") {
-    const currentUser = await client.stream_User.findUnique({
+    const currentUser = await client.stream_user.findUnique({
       where: {
         externalUserId: payload.data.id,
       },
@@ -70,7 +70,7 @@ export async function POST(req: Request) {
     if (!currentUser) {
       return new Response("User not found", { status: 404 });
     }
-    await client.stream_User.update({
+    await client.stream_user.update({
       where: {
         externalUserId: payload.data.id,
       },
@@ -81,7 +81,7 @@ export async function POST(req: Request) {
     });
   }
   if (eventType === "user.deleted") {
-    const currentUser = await client.stream_User.findUnique({
+    const currentUser = await client.stream_user.findUnique({
       where: {
         externalUserId: payload.data.id,
       },
@@ -89,7 +89,7 @@ export async function POST(req: Request) {
     if (!currentUser) {
       return new Response("User not found", { status: 404 });
     }
-    await client.stream_User.delete({
+    await client.stream_user.delete({
       where: {
         externalUserId: payload.data.id,
       },
