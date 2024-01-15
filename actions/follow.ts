@@ -1,5 +1,5 @@
 "use server";
-import { followUser } from "@/lib/follow-service";
+import { followUser, unfollowUser } from "@/lib/follow-service";
 import { revalidatePath } from "next/cache";
 
 //서버액션
@@ -11,7 +11,20 @@ export async function onFollow(id: string) {
       revalidatePath(`/${followedUser.following.username}`);
     }
     return followedUser;
-  } catch {
+  } catch (error) {
+    throw new Error("Interal Error");
+  }
+}
+
+export async function onUnfollow(id: string) {
+  try {
+    const unfollowedUser = await unfollowUser(id);
+    revalidatePath("/");
+    if (unfollowedUser) {
+      revalidatePath(`/${unfollowedUser.following.username}`);
+    }
+    return unfollowedUser;
+  } catch (error) {
     throw new Error("Interal Error");
   }
 }

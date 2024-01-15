@@ -79,4 +79,25 @@ export async function unfollowUser(id: string) {
   if (!otherUser) {
     throw new Error("User not found");
   }
+  if (self.id === otherUser.id) {
+    throw new Error("Cannot unfollow yourself");
+  }
+  const existingFollow = await client.stream_follow.findFirst({
+    where: {
+      followerId: self.id,
+      followingId: otherUser.id,
+    },
+  });
+  if (!existingFollow) {
+    throw new Error("Not following");
+  }
+  const follow = await client.stream_follow.delete({
+    where: {
+      id: existingFollow.id,
+    },
+    include: {
+      following: true,
+    },
+  });
+  return follow;
 }
