@@ -1,3 +1,12 @@
+import { Navigation } from "./navigation";
+import { Toggle } from "./toggle";
+import { Wrapper } from "./wrapper";
+
 export function Sidebar() {
-  return <div>Sidebar</div>;
+  return (
+    <Wrapper>
+      <Toggle />
+      <Navigation />
+    </Wrapper>
+  );
 }
