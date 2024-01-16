@@ -16,10 +16,34 @@ export async function getRecommended() {
   if (userId) {
     users = await client.stream_user.findMany({
       where: {
-        //현재 로그인중인 자기자신을 제외
-        NOT: {
-          id: userId,
-        },
+        AND: [
+          //여러가지 쿼리를 넣고싶을때 AND
+          {
+            NOT: {
+              //현재 로그인중인 자기자신을 제외
+              id: userId,
+            },
+          },
+          {
+            NOT: {
+              //팔로우중인사람은 추천목록에서 제외
+              follwedBy: {
+                some: {
+                  followerId: userId,
+                },
+              },
+            },
+          },
+          {
+            NOT: {
+              blocking: {
+                some: {
+                  blockedId: userId,
+                },
+              },
+            },
+          },
+        ],
       },
       orderBy: {
         createdAt: "desc",
