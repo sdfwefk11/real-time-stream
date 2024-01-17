@@ -1,6 +1,9 @@
 import { getSelf } from "./auth-service";
 import { client } from "./client";
 
+//blocker: 차단건사람
+//blocked: 차단된사람
+
 export async function isBlockedByUser(id: string) {
   try {
     const self = await getSelf();
