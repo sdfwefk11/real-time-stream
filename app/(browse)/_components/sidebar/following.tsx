@@ -1,15 +1,11 @@
 "use client";
 import { useSidebar } from "@/store/use-sidebar";
-import {
-  Stream_follow,
-  Stream_stream,
-  Stream_user,
-} from "prisma/prisma-client";
+import { Stream_follow, Stream_user } from "prisma/prisma-client";
 import { UserItem, UserItemSkeleton } from "./user-item";
 
 interface FollowingProps {
   data: (Stream_follow & {
-    following: Stream_user & { stream: Stream_stream | null };
+    following: Stream_user & { stream: { isLive: boolean } | null };
   })[];
 }
 
