@@ -22,8 +22,8 @@ import {
 import { useState, useTransition, useRef, ElementRef } from "react";
 import { toast } from "sonner";
 
-const RTMP = String(IngressInput.RTMP_INPUT);
-const WHIP = String(IngressInput.WHIP_INPUT);
+const RTMP = String(IngressInput.RTMP_INPUT); // 0: string;
+const WHIP = String(IngressInput.WHIP_INPUT); // 1: string;
 
 type IngressType = typeof RTMP | typeof WHIP;
 
@@ -34,10 +34,10 @@ export function ConnectModal() {
 
   const onSubmit = () => {
     startTransition(() => {
-      createIngress(parseInt(ingressType))
+      createIngress(parseInt(ingressType)) //다시 Int형태로 변환
         .then(() => {
           toast.success("Ingress created");
-          closeRef?.current?.click();
+          closeRef?.current?.click(); //URL과 Key가 설정된후 자동으로 창이 닫히게 하기위해 Cancel 버튼에 ref를 걸어주었다.
         })
         .catch(() => toast.error("Something went wrong"));
     });
@@ -56,6 +56,7 @@ export function ConnectModal() {
           value={ingressType}
           onValueChange={(value) => setIngressType(value)}
         >
+          {/* Select 태그가 SelectItem 태그의 선택된 현재 value값을 가지고있음 */}
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Ingress Type" />
           </SelectTrigger>

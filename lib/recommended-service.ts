@@ -45,12 +45,14 @@ export async function getRecommended() {
           },
         ],
       },
+      include: { stream: true },
       orderBy: {
         createdAt: "desc",
       },
     });
   } else {
     users = await client.stream_user.findMany({
+      include: { stream: true },
       orderBy: {
         createdAt: "desc",
       },
