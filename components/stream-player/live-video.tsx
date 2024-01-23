@@ -14,7 +14,7 @@ export function LiveVideo({ participant }: LiveVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [volume, setVolume] = useState(0);
+  const [volume, setVolume] = useState(100);
 
   useTracks([Track.Source.Camera, Track.Source.Microphone])
     .filter((track) => track.participant.identity === participant.identity)
@@ -54,7 +54,7 @@ export function LiveVideo({ participant }: LiveVideoProps) {
     }
   };
   useEffect(() => {
-    onVolumeChange(0);
+    onVolumeChange(100);
   }, []);
 
   useEventListener("fullscreenchange", handleFullscreenChange, wrapperRef);
