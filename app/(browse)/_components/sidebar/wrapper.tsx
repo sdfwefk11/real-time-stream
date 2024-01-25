@@ -4,6 +4,7 @@ import { useSidebar } from "@/store/use-sidebar";
 import { ToggleSkeleton } from "./toggle";
 import { RecommendedSkeleton } from "./recommended";
 import { useIsClient } from "usehooks-ts";
+import { FollowingSkeleton } from "./following";
 
 interface WrapperProps {
   children: React.ReactNode;
@@ -16,6 +17,7 @@ export function Wrapper({ children }: WrapperProps) {
       //서버사이드에서 렌더링 될때
       <aside className="fixed flex flex-col left-0 w-[70px] lg:w-60 h-full bg-background border-r border-[#2D2E35] z-50">
         <ToggleSkeleton />
+        <FollowingSkeleton />
         <RecommendedSkeleton />
       </aside>
     );

@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 interface UserItemProps {
   username: string;
   imageUrl: string;
-  isLive: boolean;
+  isLive?: boolean;
 }
 
 export function UserItem({ username, imageUrl, isLive }: UserItemProps) {
@@ -36,7 +36,11 @@ export function UserItem({ username, imageUrl, isLive }: UserItemProps) {
             collapsed && "justify-center"
           )}
         >
-          <UserAvatar imageUrl={imageUrl} username={username} isLive={isLive} />
+          <UserAvatar
+            imageUrl={imageUrl}
+            username={username}
+            isLive={isLive!}
+          />
           {
             !collapsed && <p className="truncate">{username}</p>
             /**

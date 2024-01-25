@@ -1,6 +1,38 @@
 import { getSelf } from "./auth-service";
 import { client } from "./client";
 
+export async function getFollowedUsers() {
+  try {
+    const self = await getSelf();
+    const followedUsers = client.stream_follow.findMany({
+      where: {
+        followerId: self.id,
+        following: {
+          blocking: {
+            none: {
+              blockedId: self.id,
+            },
+          },
+        },
+      },
+      include: {
+        following: {
+          include: {
+            stream: {
+              select: {
+                isLive: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return followedUsers;
+  } catch {
+    return [];
+  }
+}
+
 export async function isFollowingUser(id: string) {
   try {
     const self = await getSelf();

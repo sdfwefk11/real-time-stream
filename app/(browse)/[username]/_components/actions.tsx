@@ -1,4 +1,5 @@
 "use client";
+import { onBlock, onUnblock } from "@/actions/block";
 import { onFollow, onUnfollow } from "@/actions/follow";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
@@ -38,13 +39,36 @@ export function Actions({ isFollowing, userId }: ActionsProps) {
       handleFollow();
     }
   };
+
+  const handleBlock = () => {
+    startTransition(() => {
+      onBlock(userId)
+        .then((data) =>
+          toast.success(`Blocked the user ${data.blocked.username}`)
+        )
+        .catch(() => toast.error("Something went wrong"));
+    });
+  };
+  const handleUnblock = () => {
+    startTransition(() => {
+      onUnblock(userId)
+        .then((data) => toast.success(`...${data.blocked.username}`))
+        .catch(() => toast.error("Something went wrong"));
+    });
+  };
+  const onBlockClick = () => {};
   return (
-    <Button
-      disabled={isPending} // isFollowing: 현재 보고있는 프로필페이지가 나 자신의 프로필페이지이면 나 자신은 팔로우 할수 없기 때문에 Follow 버튼 비활성화
-      onClick={onClick}
-      variant="primary"
-    >
-      {isFollowing ? "Unfollow" : "Follow"}
-    </Button>
+    <>
+      <Button
+        disabled={isPending} // isFollowing: 현재 보고있는 프로필페이지가 나 자신의 프로필페이지이면 나 자신은 팔로우 할수 없기 때문에 Follow 버튼 비활성화
+        onClick={onClick}
+        variant="primary"
+      >
+        {isFollowing ? "Unfollow" : "Follow"}
+      </Button>
+      <Button disabled={isPending} onClick={handleBlock}>
+        Block
+      </Button>
+    </>
   );
 }
