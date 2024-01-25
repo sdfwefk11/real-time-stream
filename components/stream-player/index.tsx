@@ -6,7 +6,7 @@ import { Video } from "./video";
 import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { cn } from "@/lib/utils";
 import { Chat } from "./chat";
-import { VariantToggle } from "./variant-toggle";
+import { ChatToggle } from "./chat-toggle";
 
 interface StreamPlayerProps {
   user: Stream_user & { stream: Stream_stream | null };
@@ -25,7 +25,7 @@ export function StreamPlayer({ user, stream, isFollowing }: StreamPlayerProps) {
     <>
       {collapsed && (
         <div className="hidden lg:block fixed top-[100px] right-2 z-50">
-          <VariantToggle />
+          <ChatToggle />
         </div>
       )}
       <LiveKitRoom
