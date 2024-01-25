@@ -10,6 +10,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { ChatHeader } from "./chat-header";
 import { ChatForm } from "./chat-form";
+import { ChatList } from "./chat-list";
 
 interface ChatProps {
   hostName: string;
@@ -42,8 +43,6 @@ export function Chat({
   const [value, setValue] = useState("");
   const { send, chatMessages: messages } = useChat();
 
-  console.log(matches);
-
   useEffect(() => {
     if (matches) {
       onExpand();
@@ -51,7 +50,7 @@ export function Chat({
   }, [matches, onExpand]);
 
   const reversedMessage = useMemo(() => {
-    messages.sort((a, b) => a.timestamp - b.timestamp);
+    return messages.sort((a, b) => a.timestamp - b.timestamp);
   }, [messages]);
 
   const onSubmit = () => {
@@ -70,6 +69,7 @@ export function Chat({
       <ChatHeader />
       {variant === ChatVariant.CHAT && (
         <>
+          <ChatList messages={reversedMessage} isHidden={isHidden} />
           <ChatForm
             onSubmit={onSubmit}
             value={value}
