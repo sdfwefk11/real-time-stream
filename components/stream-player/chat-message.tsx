@@ -1,5 +1,6 @@
 "use client";
 import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 import { stringToColor } from "@/lib/utils";
 import { ReceivedChatMessage } from "@livekit/components-react";
 
@@ -11,7 +12,9 @@ export function ChatMessage({ data }: ChatMessageProps) {
   const color = stringToColor(data.from?.name || "");
   return (
     <div className="flex gap-2 p-2 rounded-md hover:bg-white/5">
-      <p className="text-sm text-white/40">{format(data.timestamp, "HH:MM")}</p>
+      <p className="text-sm text-white/40">
+        {format(data.timestamp, "HH:mm", { locale: ko })}
+      </p>
       <div className="flex flex-wrap items-baseline gap-1 grow">
         <p className="text-sm font-semibold whitespace-nowrap">
           <span className="truncate" style={{ color: color }}>

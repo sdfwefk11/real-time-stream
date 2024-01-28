@@ -8,9 +8,9 @@ import {
 import { ConnectionState } from "livekit-client";
 import { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import { ChatHeader } from "./chat-header";
-import { ChatForm } from "./chat-form";
-import { ChatList } from "./chat-list";
+import { ChatHeader, ChatHeaderSkeleton } from "./chat-header";
+import { ChatForm, ChatFormSkeleton } from "./chat-form";
+import { ChatList, ChatListSkeleton } from "./chat-list";
 import { ChatCommunity } from "./chat-community";
 
 interface ChatProps {
@@ -51,7 +51,7 @@ export function Chat({
   }, [matches, onExpand]);
 
   const reversedMessage = useMemo(() => {
-    return messages.sort((a, b) => a.timestamp - b.timestamp);
+    return messages.sort((prev, current) => current.timestamp - prev.timestamp);
   }, [messages]);
 
   const onSubmit = () => {
@@ -91,6 +91,16 @@ export function Chat({
           />
         </>
       )}
+    </div>
+  );
+}
+
+export function ChatSkeleton() {
+  return (
+    <div className="flex flex-col border-l border-b pt-0 h-[calc(100vh-80px)] border-2">
+      <ChatHeaderSkeleton />
+      <ChatListSkeleton />
+      <ChatFormSkeleton />
     </div>
   );
 }
