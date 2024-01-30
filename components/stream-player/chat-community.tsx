@@ -34,7 +34,6 @@ export function ChatCommunity({
       }
       return acc;
     }, [] as (RemoteParticipant | LocalParticipant)[]);
-
     return deduped.filter((participant) => {
       return participant.name
         ?.toLowerCase()
