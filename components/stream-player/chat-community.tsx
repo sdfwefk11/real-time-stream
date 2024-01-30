@@ -25,7 +25,6 @@ export function ChatCommunity({
   const onChange = (newValue: string) => {
     setValue(newValue);
   };
-
   const filteredParticipants = useMemo(() => {
     const deduped = participants.reduce((acc, participant) => {
       //내가 방송을켰을때 participants[]에는 현재 방송중인 나와 나를 시청하는 나 2개의 값이 들어온다 따라서 현재 방송중인 나의 항목을 제거하기위해 reduce사용
