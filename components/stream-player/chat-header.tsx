@@ -22,7 +22,7 @@ export function ChatHeaderSkeleton() {
     <div className="relative p-3 border-b">
       <Skeleton className="absolute h-6 w-6 left-3 top-3 hidden md:block" />
       <Skeleton className="w-28 h-6 mx-auto" />
-      <Skeleton className="absolute right-2 top-2 h-6 w-6" />
+      <Skeleton className="absolute right-2 top-3 h-6 w-6" />
     </div>
   );
 }

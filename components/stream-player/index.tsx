@@ -8,15 +8,16 @@ import { cn } from "@/lib/utils";
 import { Chat, ChatSkeleton } from "./chat";
 import { ChatToggle } from "./chat-toggle";
 import { Header, HeaderSkeleton } from "./header";
+import { InfoCard } from "./info-card";
 
 interface StreamPlayerProps {
-  user: Stream_user & { stream: Stream_stream | null };
+  host: Stream_user & { stream: Stream_stream | null };
   stream: Stream_stream;
   isFollowing: boolean;
 }
 
-export function StreamPlayer({ user, stream, isFollowing }: StreamPlayerProps) {
-  const { identity, token, name } = useViewerToken(user.id);
+export function StreamPlayer({ host, stream, isFollowing }: StreamPlayerProps) {
+  const { identity, token, name } = useViewerToken(host.id);
   const { collapsed } = useChatSidebar((state) => state);
 
   if (!token || !identity || !name) {
@@ -38,21 +39,29 @@ export function StreamPlayer({ user, stream, isFollowing }: StreamPlayerProps) {
         )}
       >
         <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
-          <Video hostName={user.username} hostIdentity={user.id} />
+          <Video hostName={host.username} hostIdentity={host.id} />
           <Header
-            hostName={user.username}
-            hostIdentity={user.id}
+            hostName={host.username}
+            hostIdentity={host.id}
             viewerIdentity={identity}
-            imageUrl={user.imageUrl}
+            imageUrl={host.imageUrl}
             isFollowing={isFollowing}
             name={stream.name}
           />
+          <InfoCard
+            hostIdentity={host.id}
+            viewerIdentity={identity}
+            name={stream.name}
+            thumbnailUrl={stream.thumbnailUrl}
+          />
         </div>
-        <div className={cn("col-span-1", collapsed && "hidden")}>
+        <div
+          className={cn("col-span-1 transition-all ", collapsed && "hidden")}
+        >
           <Chat
             viewerName={name}
-            hostName={user.username}
-            hostIdentity={user.id}
+            hostName={host.username}
+            hostIdentity={host.id}
             isFollowing={isFollowing}
             isChatEnabled={stream.isChatEnabled}
             isChatDelayed={stream.isChatDelayed}
