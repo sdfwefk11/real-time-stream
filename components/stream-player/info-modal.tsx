@@ -13,6 +13,10 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { updateStream } from "@/actions/stream";
 import { toast } from "sonner";
+import { UploadDropzone } from "@/lib/uploadthing";
+import { useRouter } from "next/navigation";
+import { Hint } from "../hint";
+import { Trash2 } from "lucide-react";
 
 interface InfoModalProps {
   initialName: string;
@@ -23,9 +27,11 @@ export function InfoModal({
   initialName,
   initialThumbnailUrl,
 }: InfoModalProps) {
+  const router = useRouter();
   const [name, setName] = useState(initialName);
   const [isPending, startTransition] = useTransition();
   const closeRef = useRef<HTMLButtonElement>(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState(initialThumbnailUrl);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -62,6 +68,38 @@ export function InfoModal({
               value={name}
               disabled={isPending}
             />
+          </div>
+          <div className="space-y-3">
+            <Label>Thumbnail</Label>
+            {thumbnailUrl ? (
+              <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10">
+                <div className="absolute top-2 right-2 z-[10]">
+                  <Hint label="Remove thumbnail" asChild>
+                    <Button disabled={isPending} type="button" className="">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </Hint>
+                </div>
+              </div>
+            ) : (
+              <div className="rounded-xl border outline-dashed outline-muted">
+                <UploadDropzone
+                  endpoint="thumbnailUploader"
+                  appearance={{
+                    label: { color: "#FFFFFF" },
+                    uploadIcon: { color: "mistyrose" },
+                  }}
+                  content={{
+                    label: "파일을 선택하거나 드래그 드롭하세요.",
+                    allowedContent: "이미지(4MB)",
+                  }}
+                  onClientUploadComplete={(res) => {
+                    setThumbnailUrl(res?.[0]?.url);
+                    router.refresh();
+                  }}
+                />
+              </div>
+            )}
           </div>
           <div className="flex justify-between">
             <DialogClose asChild ref={closeRef}>
