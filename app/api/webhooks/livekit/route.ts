@@ -28,7 +28,6 @@ export async function POST(request: Request) {
       },
     });
   }
-
   if (event.event === "ingress_ended") {
     await client.stream_stream.update({
       where: {
