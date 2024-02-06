@@ -24,7 +24,7 @@ export function UserItem({ username, imageUrl, isLive }: UserItemProps) {
       asChild
       variant="ghost"
       className={cn(
-        "w-full h-12 bg-[linear-gradient(45deg,transparent_25%,rgba(68,68,68,.2)_50%,transparent_50%,transparent_100%)] relative overflow-hidden bg-[length:250%_250%,100%_100%] bg-[position:-100%_0,0_0] bg-no-repeat transition-[background-position_0s_ease] hover:bg-[position:200%_0,0_0] duration-1500",
+        "w-full h-12 bg-[linear-gradient(45deg,transparent_25%,rgba(68,68,68,.2)_50%,transparent_50%,transparent_100%)] relative overflow-hidden bg-[length:250%_250%,100%_100%] bg-[position:-100%_0,0_0] bg-no-repeat transition-[background-position_0s_ease] hover:bg-[position:200%_0,0_0] duration-1000",
         collapsed ? "justify-center" : "justify-start",
         isActive && "bg-accent"
       )}

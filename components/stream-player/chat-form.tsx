@@ -80,11 +80,13 @@ export function ChatForm({
 }
 
 export function ChatFormSkeleton() {
-  <div className="flex flex-col items-center gap-y-4 p-3">
-    <Skeleton className="w-full h-10" />
-    <div className="flex items-center gap-x-2 ml-auto">
-      <Skeleton className="w-7 h-7" />
-      <Skeleton className="w-12 h-7" />
+  return (
+    <div className="flex flex-col items-center gap-y-4 p-3">
+      <Skeleton className="w-full h-10" />
+      <div className="flex items-center gap-x-2 ml-auto">
+        <Skeleton className="w-7 h-7" />
+        <Skeleton className="w-12 h-7" />
+      </div>
     </div>
-  </div>;
+  );
 }

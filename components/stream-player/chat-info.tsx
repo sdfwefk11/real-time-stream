@@ -34,7 +34,7 @@ export function ChatInfo({ isDelayed, isFollowersOnly }: ChatInfoProps) {
     return "";
   }, [isDelayed, isFollowersOnly]);
 
-  if (!isDelayed && !isDelayed) {
+  if (!isDelayed && !isFollowersOnly) {
     return null;
   }
   return (

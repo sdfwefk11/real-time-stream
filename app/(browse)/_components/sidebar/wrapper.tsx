@@ -25,7 +25,7 @@ export function Wrapper({ children }: WrapperProps) {
   return (
     <aside
       className={cn(
-        "fixed flex flex-col left-0 w-60 h-full bg-background border-r border-[#2D2E35] z-50",
+        "fixed flex flex-col left-0 w-60 h-full bg-background border-r border-[#2D2E35] z-50 transition-all ease-in-out",
         collapsed && "w-[70px]"
       )}
     >
