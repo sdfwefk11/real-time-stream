@@ -18,6 +18,17 @@ import { useRouter } from "next/navigation";
 import { Hint } from "../hint";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 
 interface InfoModalProps {
   initialName: string;
@@ -36,7 +47,12 @@ export function InfoModal({
 
   const onRemove = () => {
     startTransition(() => {
-      updateStream({ thumbnailUrl: null });
+      updateStream({ thumbnailUrl: null })
+        .then(() => {
+          toast.success("썸네일이 삭제되었습니다.");
+          setThumbnailUrl("");
+        })
+        .catch(() => toast.error("Something went wrong"));
     });
   };
 
@@ -49,7 +65,7 @@ export function InfoModal({
     startTransition(() => {
       updateStream({ name: name })
         .then(() => {
-          toast.success("Stream updated");
+          toast.success("스트리밍 정보가 업데이트 되었습니다.");
           closeRef?.current?.click();
         })
         .catch(() => toast.error("Something went wrong"));
@@ -59,37 +75,57 @@ export function InfoModal({
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="link" size="sm" className="ml-auto">
-          Edit
+          편집
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit stream info</DialogTitle>
+          <DialogTitle>스트리밍 정보 수정</DialogTitle>
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-14">
           <div className="space-y-2">
-            <Label>Name</Label>
+            <Label>이름</Label>
             <Input
-              placeholder="Stream name"
+              placeholder="스트리밍 제목"
               onChange={onChange}
               value={name}
               disabled={isPending}
             />
           </div>
           <div className="space-y-3">
-            <Label>Thumbnail</Label>
+            <Label>썸네일</Label>
             {thumbnailUrl ? (
               <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10">
                 <div className="absolute top-2 right-2 z-[10]">
                   <Hint label="Remove thumbnail" asChild>
-                    <Button
-                      disabled={isPending}
-                      type="button"
-                      onClick={() => {}}
-                      className="h-auto w-auto p-1.5"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          disabled={isPending}
+                          type="button"
+                          className="h-auto w-auto p-1.5"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>삭제</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            썸네일이 삭제됩니다.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>취소</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={onRemove}
+                            className="bg-red-700 text-white hover:bg-red-800"
+                          >
+                            삭제
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </Hint>
                 </div>
                 <Image
@@ -122,11 +158,11 @@ export function InfoModal({
           <div className="flex justify-between">
             <DialogClose asChild ref={closeRef}>
               <Button type="button" variant="ghost">
-                Cancel
+                취소
               </Button>
             </DialogClose>
             <Button variant="primary" type="submit" disabled={isPending}>
-              Save
+              저장
             </Button>
           </div>
         </form>

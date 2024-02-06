@@ -10,9 +10,13 @@ import { ChatToggle } from "./chat-toggle";
 import { Header, HeaderSkeleton } from "./header";
 import { InfoCard } from "./info-card";
 import { useToggleThumbnail } from "@/store/use-thumbnail-toggle";
+import { AboutCard } from "./about-card";
 
 interface StreamPlayerProps {
-  host: Stream_user & { stream: Stream_stream | null };
+  host: Stream_user & {
+    stream: Stream_stream | null;
+    _count: { follwedBy: number };
+  };
   stream: Stream_stream;
   isFollowing: boolean;
 }
@@ -54,6 +58,13 @@ export function StreamPlayer({ host, stream, isFollowing }: StreamPlayerProps) {
             viewerIdentity={identity}
             name={stream.name}
             thumbnailUrl={stream.thumbnailUrl}
+          />
+          <AboutCard
+            hostName={host.username}
+            hostIdentity={host.id}
+            viewerIdentity={identity}
+            bio={host.bio}
+            followedByCount={host._count.follwedBy}
           />
         </div>
         <div className={cn("col-span-1", collapsed && "hidden")}>

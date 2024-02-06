@@ -5,7 +5,7 @@ export async function getUserByUsername(username: string) {
     where: {
       username,
     },
-    include: { stream: true },
+    include: { stream: true, _count: { select: { follwedBy: true } } },
   });
   return user;
 }
