@@ -4,7 +4,7 @@ import { getSelf } from "@/lib/auth-service";
 import { client } from "@/lib/client";
 import { Stream_stream } from "prisma/prisma-client";
 
-export async function updateStream(value: Partial<Stream_stream>) {
+export async function updateStream(values: Partial<Stream_stream>) {
   try {
     const self = await getSelf();
     const selfStream = await client.stream_stream.findUnique({
@@ -18,10 +18,11 @@ export async function updateStream(value: Partial<Stream_stream>) {
     }
 
     const validData = {
-      name: value.name,
-      isChatEnabled: value.isChatEnabled,
-      isChatFollowersOnly: value.isChatFollowersOnly,
-      isChatDelayed: value.isChatDelayed,
+      thumbnailUrl: values.thumbnailUrl,
+      name: values.name,
+      isChatEnabled: values.isChatEnabled,
+      isChatFollowersOnly: values.isChatFollowersOnly,
+      isChatDelayed: values.isChatDelayed,
     };
 
     const stream = await client.stream_stream.update({

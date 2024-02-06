@@ -17,6 +17,7 @@ import { UploadDropzone } from "@/lib/uploadthing";
 import { useRouter } from "next/navigation";
 import { Hint } from "../hint";
 import { Trash2 } from "lucide-react";
+import Image from "next/image";
 
 interface InfoModalProps {
   initialName: string;
@@ -32,6 +33,12 @@ export function InfoModal({
   const [isPending, startTransition] = useTransition();
   const closeRef = useRef<HTMLButtonElement>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState(initialThumbnailUrl);
+
+  const onRemove = () => {
+    startTransition(() => {
+      updateStream({ thumbnailUrl: null });
+    });
+  };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -75,11 +82,22 @@ export function InfoModal({
               <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10">
                 <div className="absolute top-2 right-2 z-[10]">
                   <Hint label="Remove thumbnail" asChild>
-                    <Button disabled={isPending} type="button" className="">
+                    <Button
+                      disabled={isPending}
+                      type="button"
+                      onClick={() => {}}
+                      className="h-auto w-auto p-1.5"
+                    >
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </Hint>
                 </div>
+                <Image
+                  alt="Thumbnail"
+                  src={thumbnailUrl}
+                  fill
+                  className="object-cover"
+                />
               </div>
             ) : (
               <div className="rounded-xl border outline-dashed outline-muted">
