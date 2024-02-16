@@ -1,6 +1,5 @@
 "use client";
 import { useViewerToken } from "@/hooks/use-viewer-token";
-import { Stream_stream, Stream_user } from "prisma/prisma-client";
 import { LiveKitRoom } from "@livekit/components-react";
 import { Video, VideoSkeleton } from "./video";
 import { useChatSidebar } from "@/store/use-chat-sidebar";
@@ -9,15 +8,31 @@ import { Chat, ChatSkeleton } from "./chat";
 import { ChatToggle } from "./chat-toggle";
 import { Header, HeaderSkeleton } from "./header";
 import { InfoCard } from "./info-card";
-import { useToggleThumbnail } from "@/store/use-thumbnail-toggle";
 import { AboutCard } from "./about-card";
 
+type CustomStream = {
+  name: string;
+  id: string;
+  thumbnailUrl: string | null;
+  isChatEnabled: boolean;
+  isChatDelayed: boolean;
+  isChatFollowersOnly: boolean;
+  isLive: boolean;
+};
+
+type CustomUser = {
+  id: string;
+  imageUrl: string;
+  bio: string | null;
+  username: string;
+  externalUserId: string;
+  stream: CustomStream | null;
+  _count: { follwedBy: number };
+};
+
 interface StreamPlayerProps {
-  host: Stream_user & {
-    stream: Stream_stream | null;
-    _count: { follwedBy: number };
-  };
-  stream: Stream_stream;
+  host: CustomUser;
+  stream: CustomStream;
   isFollowing: boolean;
 }
 
