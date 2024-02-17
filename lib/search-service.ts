@@ -38,7 +38,12 @@ export async function getSearch(term?: string) {
           },
         ],
       },
-      include: {
+      select: {
+        id: true,
+        thumbnailUrl: true,
+        isLive: true,
+        updatedAt: true,
+        name: true,
         user: true,
       },
       orderBy: [
@@ -68,7 +73,12 @@ export async function getSearch(term?: string) {
           },
         ],
       },
-      include: {
+      select: {
+        id: true,
+        thumbnailUrl: true,
+        isLive: true,
+        updatedAt: true,
+        name: true,
         user: true,
       },
       orderBy: [

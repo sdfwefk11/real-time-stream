@@ -6,8 +6,16 @@ import { ko } from "date-fns/locale";
 import Link from "next/link";
 import { Stream_stream, Stream_user } from "prisma/prisma-client";
 
+type CustomStream = {
+  id: string;
+  name: string;
+  thumbnailUrl: string | null;
+  isLive: boolean;
+  updatedAt: Date;
+};
+
 interface ResultCardProps {
-  data: Stream_stream & { user: Stream_user };
+  data: CustomStream & { user: Stream_user };
 }
 
 export function ResultCard({ data }: ResultCardProps) {
@@ -33,7 +41,8 @@ export function ResultCard({ data }: ResultCardProps) {
           <p className="text-sm text-muted-foreground">
             {formatDistanceToNow(new Date(data.updatedAt), {
               locale: ko,
-            })}
+            })}{" "}
+            전
           </p>
         </div>
       </div>

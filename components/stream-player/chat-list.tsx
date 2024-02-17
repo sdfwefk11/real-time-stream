@@ -6,14 +6,23 @@ import { Skeleton } from "../ui/skeleton";
 interface ChatListProps {
   messages: ReceivedChatMessage[];
   isHidden: boolean;
+  hostName: string;
+  viewerName: string;
 }
 
-export function ChatList({ messages, isHidden }: ChatListProps) {
+export function ChatList({
+  messages,
+  isHidden,
+  hostName,
+  viewerName,
+}: ChatListProps) {
   if (isHidden || !messages || messages.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center">
         <p className="text-sm text-muted-foreground">
-          {isHidden ? "Chat is disabled" : "Welcome to the chat!"}
+          {isHidden
+            ? "채팅이 비활성화 되었습니다"
+            : "채팅에 오신걸 환영합니다!"}
         </p>
       </div>
     );
@@ -21,7 +30,12 @@ export function ChatList({ messages, isHidden }: ChatListProps) {
   return (
     <div className="flex flex-1 flex-col-reverse overflow-y-auto p-3 h-full">
       {messages.map((message) => (
-        <ChatMessage key={message.timestamp} data={message} />
+        <ChatMessage
+          key={message.timestamp}
+          data={message}
+          hostName={hostName}
+          viewerName={viewerName}
+        />
       ))}
     </div>
   );

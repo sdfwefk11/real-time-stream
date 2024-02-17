@@ -84,7 +84,7 @@ export function InfoModal({
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-14">
           <div className="space-y-2">
-            <Label>이름</Label>
+            <Label>제목</Label>
             <Input
               placeholder="스트리밍 제목"
               onChange={onChange}

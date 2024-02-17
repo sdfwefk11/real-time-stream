@@ -3,7 +3,7 @@
 import { cn, stringToColor } from "@/lib/utils";
 import { Hint } from "../hint";
 import { Button } from "../ui/button";
-import { MinusCircle } from "lucide-react";
+import { CrownIcon, MinusCircle } from "lucide-react";
 import { useTransition } from "react";
 import { onBlock } from "@/actions/block";
 import { toast } from "sonner";
@@ -25,13 +25,14 @@ export function CommunityItem({
   const color = stringToColor(participantName || "");
   const isSelf = participantName === viewerName;
   const isHost = viewerName === hostName;
+  const isHostParticipant = participantIdentity.includes("host");
 
   const handleBlock = () => {
     if (!participantName || isSelf || !isHost) return;
     startTransition(() => {
       onBlock(participantIdentity)
-        .then(() => toast.success(`Blocked ${participantName}`))
-        .catch(() => toast.error("Something went wrong"));
+        .then(() => toast.success(`${participantName} 차단되었습니다`))
+        .catch(() => toast.error("서버응답 오류"));
     });
   };
   return (
@@ -41,9 +42,15 @@ export function CommunityItem({
         isPending && "opacity-50 pointer-events-none"
       )}
     >
-      <p style={{ color: color }}>{participantName}</p>
+      <p
+        style={{ color: color }}
+        className="flex gap-x-1 justify-center items-center"
+      >
+        {isHostParticipant && <CrownIcon className="w-4 h-4 text-yellow-500" />}
+        {participantName}
+      </p>
       {isHost && !isSelf && (
-        <Hint label="Block">
+        <Hint label="차단">
           <Button
             disabled={isPending}
             onClick={handleBlock}

@@ -16,7 +16,7 @@ export function ChatToggle() {
       onCollapse();
     }
   };
-  const label = collapsed ? "Expand" : "Collapse";
+  const label = collapsed ? "확장" : "닫기";
 
   return (
     <Hint label={label} side="left" asChild>
