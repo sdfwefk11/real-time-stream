@@ -1,0 +1,189 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Answer {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  userId    Int
+  answer    String   @db.MediumText
+  postId    Int
+}
+
+model Fav {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  userId    Int
+  productId Int
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  userId    Int
+  question  String   @db.MediumText
+  latitude  Float?
+  longitude Float?
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+  userId      Int
+  image       String
+  name        String
+  price       Float
+  description String   @db.MediumText
+  viewCount   Int      @default(0)
+}
+
+model Purchase {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  userId    Int
+  productId Int
+}
+
+model Review {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+  review      String   @db.MediumText
+  createById  Int
+  createForId Int
+  score       Int      @default(1)
+}
+
+model Sale {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  userId    Int
+  productId Int
+}
+
+model Stream {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+  name        String
+  description String   @db.MediumText
+  price       Int
+  userId      Int
+}
+
+model StreamChat {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  userId    Int
+  message   String   @db.MediumText
+  streamId  Int
+}
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  payload   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  userId    Int
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  phone     String?  @unique
+  email     String?  @unique
+  name      String
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  nickName  String   @default("ㅇㅇ")
+}
+
+model Wondering {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  userId    Int
+  postId    Int
+}
+
+model Stream_user {
+  id             String          @id @default(uuid())
+  username       String          @unique
+  imageUrl       String          @db.Text
+  externalUserId String          @unique
+  bio            String?         @db.Text
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  following      Stream_follow[] @relation("Following")
+  follwedBy      Stream_follow[] @relation("FollowedBy")
+  blocking       Stream_block[]  @relation("Blocking")
+  blockedBy      Stream_block[]  @relation("BlockedBy")
+  stream         Stream_stream?
+}
+
+model Stream_follow {
+  id          String      @id @default(uuid())
+  followerId  String
+  followingId String
+  follower    Stream_user @relation(name: "Following", fields: [followerId], references: [id], onDelete: Cascade)
+  following   Stream_user @relation(name: "FollowedBy", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+model Stream_block {
+  id        String      @id @default(uuid())
+  blockerId String
+  blockedId String
+  blocker   Stream_user @relation(name: "Blocking", fields: [blockerId], references: [id], onDelete: Cascade)
+  blocked   Stream_user @relation(name: "BlockedBy", fields: [blockedId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@unique([blockerId, blockedId])
+  @@index([blockerId])
+  @@index([blockedId])
+}
+
+model Stream_stream {
+  id           String  @id @default(uuid())
+  name         String  @db.Text
+  thumbnailUrl String? @db.Text
+
+  ingressId String? @unique
+  serverUrl String? @db.Text
+  streamKey String? @db.Text
+
+  isLive              Boolean @default(false)
+  isChatEnabled       Boolean @default(true)
+  isChatDelayed       Boolean @default(false)
+  isChatFollowersOnly Boolean @default(false)
+
+  userId String      @unique
+  user   Stream_user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([ingressId])
+  @@fulltext([name])
+}
