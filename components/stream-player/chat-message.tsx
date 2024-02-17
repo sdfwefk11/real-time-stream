@@ -22,7 +22,6 @@ export function ChatMessage({ data, hostName, viewerName }: ChatMessageProps) {
   const isHost = viewerName === hostName;
   const isSelf = hostName === data.from?.name;
   const color = stringToColor(data.from?.name || "");
-  console.log(`${viewerName} ${data.from?.name}`);
 
   const handleBlock = () => {
     if (!data || isSelf || !isHost) return;
