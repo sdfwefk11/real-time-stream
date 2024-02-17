@@ -24,6 +24,7 @@ export function Search() {
       { skipEmptyString: true } //입력받은 값이 없으면 ""
     );
     router.push(url); //받은 검색어를 토대로 url를 생성후 push
+    onClear();
   };
   const onClear = () => {
     setValue("");

@@ -16,17 +16,17 @@ export default async function Chat() {
       <div className="space-y-4">
         <ToggleCard
           field="isChatEnabled"
-          label="Enable chat"
+          label="채팅 활성화"
           value={stream.isChatEnabled}
         />
         <ToggleCard
           field="isChatDelayed"
-          label="Delay chat"
+          label="채팅 딜레이"
           value={stream.isChatDelayed}
         />
         <ToggleCard
           field="isChatFollowersOnly"
-          label="Must be following to chat"
+          label="팔로우중일때만 채팅 활성화"
           value={stream.isChatFollowersOnly}
         />
       </div>

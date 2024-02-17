@@ -16,7 +16,7 @@ export function VariantToggle() {
     const newVariant = isChat ? ChatVariant.COMMUNITY : ChatVariant.CHAT;
     onChangeVariant(newVariant);
   };
-  const label = isChat ? "Community" : "Go back to chat";
+  const label = isChat ? "커뮤니티" : "채칭으로 돌아가기";
   return (
     <Hint label={label} side="left" asChild>
       <Button

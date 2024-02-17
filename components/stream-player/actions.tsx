@@ -24,9 +24,9 @@ export function Actions({ hostIdentity, isFollowing, isHost }: ActionsProps) {
     startTransition(() => {
       onFollow(hostIdentity)
         .then((data) =>
-          toast.success(`You are now following ${data.following.username}`)
+          toast.success(`이제 팔로우중입니다 ${data.following.username}`)
         )
-        .catch(() => toast.error("Something went wrong"));
+        .catch(() => toast.error("서버 응답 오류"));
     });
   };
 
@@ -34,9 +34,9 @@ export function Actions({ hostIdentity, isFollowing, isHost }: ActionsProps) {
     startTransition(() => {
       onUnfollow(hostIdentity)
         .then((data) =>
-          toast.success(`You have unfollowed ${data.following.username}`)
+          toast.success(`언팔로우되었습니다 ${data.following.username}`)
         )
-        .catch(() => toast.error("Something went wrong"));
+        .catch(() => toast.error("서버 응답 오류"));
     });
   };
 
@@ -63,7 +63,7 @@ export function Actions({ hostIdentity, isFollowing, isHost }: ActionsProps) {
       <Heart
         className={cn("h-4 w-4 mr-2", isFollowing ? "fill-white" : "fill-none")}
       />
-      {isFollowing ? "Unfollow" : "Follow"}
+      {isFollowing ? "언팔로우" : "팔로우"}
     </Button>
   );
 }

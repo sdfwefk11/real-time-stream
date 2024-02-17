@@ -63,16 +63,16 @@ export function ChatForm({
           onChange={(event) => onChange(event.target.value)}
           value={value}
           disabled={isDisabled}
-          placeholder="Send a message"
+          placeholder="메세지 보내기"
           className={cn(
             "border-white/10",
-            isFollowersOnly && "rounded-t-none border-t-0"
+            (isFollowersOnly || isDelayed) && "rounded-t-none border-t-0"
           )}
         />
       </div>
       <div className="ml-auto">
         <Button type="submit" variant="primary" size="sm" disabled={isDisabled}>
-          Chat
+          채팅
         </Button>
       </div>
     </form>

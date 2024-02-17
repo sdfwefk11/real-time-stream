@@ -44,7 +44,9 @@ export function ChatCommunity({
   if (isHidden) {
     return (
       <div className="flex flex-1 items-center justify-center">
-        <p className="text-sm text-muted-foreground">Community is disabled</p>
+        <p className="text-sm text-muted-foreground">
+          커뮤니티가 비활성화되었습니다
+        </p>
       </div>
     );
   }
@@ -53,12 +55,12 @@ export function ChatCommunity({
     <div className="p-4">
       <Input
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Search community"
+        placeholder="커뮤니티 검색"
         className="border-white/10"
       />
       <ScrollArea className="gap-y-2 mt-4">
         <p className="text-center text-sm text-muted-foreground hidden last:block">
-          No results
+          결과가 없습니다
         </p>
         {filteredParticipants.map((participant) => (
           <CommunityItem

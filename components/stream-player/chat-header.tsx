@@ -9,7 +9,7 @@ export function ChatHeader() {
       <div className="absolute left-2 top-2 hidden lg:block">
         <ChatToggle />
       </div>
-      <p className="font-semibold text-primary text-center">Stream Chat</p>
+      <p className="font-semibold text-primary text-center">스트리밍 채팅</p>
       <div className="absolute right-2 top-2">
         <VariantToggle />
       </div>
